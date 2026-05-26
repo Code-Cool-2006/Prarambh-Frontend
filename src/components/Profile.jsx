@@ -302,11 +302,14 @@ export default function Profile() {
         ? 'prarambh-profile'
         : displayName.toLowerCase().replace(/\s+/g, '-')) + '.png';
 
+    // Add rendering class for CSS overrides during download
+    card.classList.add('is-rendering');
+
     // We will render high-res, hiding download buttons & scratch canvas
     // html2canvas parameter options are configured below
     html2canvas(card, {
       backgroundColor: '#0C0820', // force dark card bg - no white borders
-      scale: 2,                  // 2x for high quality DPI
+      scale: 4,                  // 4x for high quality DPI
       useCORS: true,
       allowTaint: true,
       logging: false,
@@ -326,6 +329,7 @@ export default function Profile() {
       },
     })
       .then((canvas) => {
+        card.classList.remove('is-rendering');
         setIsDownloading(false);
         // Trigger download
         const a = document.createElement('a');
@@ -337,6 +341,7 @@ export default function Profile() {
         showToast('✦ Downloaded!');
       })
       .catch((err) => {
+        card.classList.remove('is-rendering');
         setIsDownloading(false);
         console.error(err);
         showToast('⚠ Try again');
