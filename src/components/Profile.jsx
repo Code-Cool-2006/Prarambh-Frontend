@@ -62,7 +62,8 @@ export default function Profile() {
     const userId = localStorage.getItem('userId');
     if (!userId) return;
 
-    fetch(`http://localhost:3000/api/credentials/${userId}`, {
+    const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    fetch(`${API_BASE}/api/credentials/${userId}`, {
       method: 'GET',
       headers: {
         'X-Api-Key': 'change-me-secret'

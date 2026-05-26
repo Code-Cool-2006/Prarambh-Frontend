@@ -42,8 +42,8 @@ export default function Login() {
       .map(part => part.charAt(0).toUpperCase() + part.slice(1))
       .join(' ');
 
-    // Post to the backend
-    fetch('http://localhost:3000/api/credentials', {
+    const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    fetch(`${API_BASE}/api/credentials`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
