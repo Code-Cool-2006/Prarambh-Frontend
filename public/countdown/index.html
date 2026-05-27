@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PRARAMBH — Something is Coming</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;1,300&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+  <div class="scanlines"></div>
+  <div class="vignette"></div>
+
+  <div class="noise"></div>
+
+  <main class="shell" id="shell">
+
+    <!-- Top bar -->
+    <div class="topbar">
+      <span class="topbar__tag">CLASSIFIED</span>
+      <span class="topbar__dots"><i></i><i></i><i></i></span>
+      <span class="topbar__tag">EVENT INCOMING</span>
+    </div>
+
+    <!-- Glitch title -->
+    <header class="header">
+      <div class="header__eyebrow">
+        <span class="mono">[ INITIALISING... ]</span>
+      </div>
+
+      <h1 class="title" data-text="PRARAMBH">PRARAMBH</h1>
+      <p class="title-deva">प्रारम्भ</p>
+
+      <p class="subtitle">The beginning of something<br/><em>you cannot predict.</em></p>
+
+      <div class="warning-strip">
+        <span>⚠</span>
+        <span class="mono">THREE ROUNDS · ZERO HINTS · TOTAL CHAOS</span>
+        <span>⚠</span>
+      </div>
+    </header>
+
+    <!-- Countdown -->
+    <section class="countdown" id="countdown">
+      <p class="countdown__label mono">// DETONATION IN</p>
+      <div class="timer">
+
+        <div class="unit">
+          <div class="unit__box">
+            <div class="unit__bg-num" aria-hidden="true">00</div>
+            <span class="unit__num" id="days">00</span>
+          </div>
+          <span class="unit__lbl">DAYS</span>
+        </div>
+
+        <div class="sep">:</div>
+
+        <div class="unit">
+          <div class="unit__box">
+            <div class="unit__bg-num" aria-hidden="true">00</div>
+            <span class="unit__num" id="hours">00</span>
+          </div>
+          <span class="unit__lbl">HRS</span>
+        </div>
+
+        <div class="sep">:</div>
+
+        <div class="unit">
+          <div class="unit__box">
+            <div class="unit__bg-num" aria-hidden="true">00</div>
+            <span class="unit__num" id="minutes">00</span>
+          </div>
+          <span class="unit__lbl">MIN</span>
+        </div>
+
+        <div class="sep">:</div>
+
+        <div class="unit">
+          <div class="unit__box">
+            <div class="unit__bg-num" aria-hidden="true">00</div>
+            <span class="unit__num" id="seconds">00</span>
+          </div>
+          <span class="unit__lbl">SEC</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Tease cards -->
+    <section class="teases" id="teases">
+      <div class="tease-card">
+        <span class="tease-card__num">01</span>
+        <div class="tease-card__body">
+          <p class="tease-card__title">Decode. Unite.</p>
+          <p class="tease-card__hint">Groups aren't formed. They're <strong>discovered.</strong></p>
+        </div>
+        <span class="tease-card__icon">?</span>
+      </div>
+      <div class="tease-card">
+        <span class="tease-card__num">02</span>
+        <div class="tease-card__body">
+          <p class="tease-card__title">Hunt. Solve. Survive.</p>
+          <p class="tease-card__hint">The answer isn't in the room. <strong>Go find it.</strong></p>
+        </div>
+        <span class="tease-card__icon">?</span>
+      </div>
+      <div class="tease-card">
+        <span class="tease-card__num">03</span>
+        <div class="tease-card__body">
+          <p class="tease-card__title">Earn. Bid. Win.</p>
+          <p class="tease-card__hint">Your points are currency. <strong>Spend wisely.</strong></p>
+        </div>
+        <span class="tease-card__icon">?</span>
+      </div>
+    </section>
+
+    <!-- Curious line -->
+    <div class="curious-strip">
+      <p class="curious-strip__text" id="rotating-line">
+        What happens when you least expect it?
+      </p>
+    </div>
+
+    <!-- Showtime -->
+    <section class="showtime" id="showtime">
+      <div class="showtime__inner">
+        <p class="showtime__pre mono">[ STATUS: LIVE ]</p>
+        <h2 class="showtime__title">IT HAS<br/>BEGUN.</h2>
+        <p class="showtime__sub">प्रारम्भ हो गया।</p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p class="footer__text mono">Are you ready for what comes next?</p>
+      <p class="footer__brand">PRARAMBH &nbsp;·&nbsp; 29.05.2026</p>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
