@@ -386,11 +386,10 @@ export default function Profile() {
           {/* Photo frame */}
           <div className="photo-s">
             <div className="pr" onClick={triggerPhoto} title="Tap to upload photo">
-              <div 
-                className="pc" 
-                style={profileImg ? { backgroundImage: `url(${profileImg})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
-              >
-                {!profileImg && (
+              <div className="pc">
+                {profileImg ? (
+                  <img src={profileImg} alt="Profile" crossOrigin="anonymous" />
+                ) : (
                   <>
                     <div className="pe" id="photoEmoji">🎭</div>
                     <div className="pl" id="photoLabel">Add Photo</div>

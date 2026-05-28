@@ -85,8 +85,8 @@
 .ns-pre{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--saffron);letter-spacing:1px;margin-bottom:6px;opacity:0.85;}
 .ns-name{
   font-family:var(--display);
-  font-size:clamp(54px,14vw,82px);
-  line-height:0.85;letter-spacing:3px;color:var(--cream);
+  font-size:clamp(46px, 11vw, 70px);
+  line-height:0.9;letter-spacing:3px;color:var(--cream);
   position:relative;
   text-shadow:2px 2px 0 rgba(232,48,90,0.35),4px 4px 0 rgba(255,107,26,0.15);
 }
