@@ -277,8 +277,11 @@ export default function Profile() {
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const url = URL.createObjectURL(file);
-    setProfileImg(url);
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setProfileImg(event.target.result);
+    };
+    reader.readAsDataURL(file);
   };
 
   // Toast message utility
