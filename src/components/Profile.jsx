@@ -62,7 +62,7 @@ export default function Profile() {
     const userId = localStorage.getItem('userId');
     if (!userId) return;
 
-    const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    const API_BASE = import.meta.env.VITE_API_URL || 'https://prarambh-backend-kappa.vercel.app';
     fetch(`${API_BASE}/api/credentials/${userId}`, {
       method: 'GET',
       headers: {

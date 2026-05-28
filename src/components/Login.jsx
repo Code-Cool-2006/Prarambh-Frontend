@@ -42,7 +42,7 @@ export default function Login() {
       .map(part => part.charAt(0).toUpperCase() + part.slice(1))
       .join(' ');
 
-    const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    const API_BASE = import.meta.env.VITE_API_URL || 'https://prarambh-backend-kappa.vercel.app';
     fetch(`${API_BASE}/api/credentials`, {
       method: 'POST',
       headers: {
