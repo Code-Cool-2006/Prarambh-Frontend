@@ -524,6 +524,24 @@
 .card.is-rendering .help-row {
   display: none !important;
 }
+.card.hide-qr-rendering {
+  width: 450px !important;
+  height: 800px !important; /* Exactly 9:16 aspect ratio */
+}
+
+.card.hide-qr-rendering .poster {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.card.hide-qr-rendering .photo-s {
+  margin-top: auto !important;
+}
+
+.card.hide-qr-rendering .div-orn {
+  margin-bottom: auto !important;
+}
 
 .card.hide-qr-rendering .qr-wrap {
   display: none !important;
