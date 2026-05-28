@@ -96,12 +96,12 @@ export default function Profile() {
   useEffect(() => {
     if (!qrToken) return;
 
-    const storedQr = localStorage.getItem(`qr_code_${qrToken}`);
+    const storedQr = localStorage.getItem(`qr_code_v2_${qrToken}`);
     if (storedQr) {
       setQrCodeUrl(storedQr);
     } else {
       QRCode.toDataURL(qrToken, {
-        width: 250,
+        width: 800,
         margin: 2,
         color: {
           dark: '#F5C842', // Gold foreground
@@ -109,7 +109,7 @@ export default function Profile() {
         }
       })
       .then(url => {
-        localStorage.setItem(`qr_code_${qrToken}`, url);
+        localStorage.setItem(`qr_code_v2_${qrToken}`, url);
         setQrCodeUrl(url);
       })
       .catch(err => {
@@ -279,7 +279,37 @@ export default function Profile() {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = (event) => {
-      setProfileImg(event.target.result);
+      const img = new Image();
+      img.onload = () => {
+        // Create canvas to crop and resize the photo to a high-res square
+        const canvas = document.createElement('canvas');
+        const size = 1200; // High resolution square size
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        // Calculate crop coordinates (centered square)
+        let sx = 0;
+        let sy = 0;
+        let sWidth = img.width;
+        let sHeight = img.height;
+
+        if (img.width > img.height) {
+          sWidth = img.height;
+          sx = (img.width - img.height) / 2;
+        } else {
+          sHeight = img.width;
+          sy = (img.height - img.width) / 2;
+        }
+
+        // Draw cropped image onto the high-res canvas
+        ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, size, size);
+
+        // Export as high-quality JPEG
+        const highResSquareUrl = canvas.toDataURL('image/jpeg', 0.95);
+        setProfileImg(highResSquareUrl);
+      };
+      img.src = event.target.result;
     };
     reader.readAsDataURL(file);
   };
