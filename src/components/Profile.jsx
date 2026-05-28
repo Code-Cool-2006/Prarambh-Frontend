@@ -433,7 +433,7 @@ export default function Profile() {
               {/* Text hidden beneath canvas */}
               <div className="dlg-box">
                 <span className="dlg-text" id="participantDialogue">
-                  {dialogueText}
+                  {dialogueText ? dialogueText.replace(/\s*\([^)]*\)\s*$/, '') : ''}
                 </span>
               </div>
               {/* Canvas Overlay */}
