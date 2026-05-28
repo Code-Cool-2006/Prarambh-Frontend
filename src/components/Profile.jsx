@@ -70,6 +70,14 @@ export default function Profile() {
       }
     })
     .then(res => {
+      if (res.status === 404 || res.status === 401) {
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('qrToken');
+        navigate('/login');
+        throw new Error('Session expired or user not found');
+      }
       if (!res.ok) {
         throw new Error('Failed to fetch credentials from backend');
       }
@@ -342,6 +350,8 @@ export default function Profile() {
       card.classList.add('hide-qr-rendering');
     }
 
+    const renderWidth = hideQr ? 450 : 440;
+
     // We will render high-res, hiding download buttons & scratch canvas
     // html2canvas parameter options are configured below
     html2canvas(card, {
@@ -350,6 +360,10 @@ export default function Profile() {
       useCORS: true,
       allowTaint: true,
       logging: false,
+      width: renderWidth,
+      windowWidth: renderWidth,
+      scrollX: 0,
+      scrollY: 0,
       ignoreElements: (el) => {
         // Hiding background elements or overlay panels to prevent them from showing in rendering
         return (

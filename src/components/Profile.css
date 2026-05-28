@@ -525,6 +525,16 @@
 }
 
 /* Override styling during high-res canvas rendering */
+.card.is-rendering {
+  animation: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+.card.is-rendering * {
+  animation: none !important;
+  transform: none !important;
+  transition: none !important;
+}
 .card.is-rendering .dlg-wrap {
   display: none !important;
 }
