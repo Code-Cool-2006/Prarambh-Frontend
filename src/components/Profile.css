@@ -525,4 +525,21 @@
   display: none !important;
 }
 
+.card.hide-qr-rendering .qr-wrap {
+  display: none !important;
+}
+
+.btn-download-secondary {
+  margin-top: 12px;
+  background: linear-gradient(135deg, #150F2A 0%, #2A2050 100%) !important;
+  border: 1px solid rgba(245, 200, 66, 0.25) !important;
+  color: var(--gold) !important;
+  box-shadow: none !important;
+}
+
+.btn-download-secondary:hover {
+  background: linear-gradient(135deg, #2A2050 0%, #3B2E70 100%) !important;
+  border-color: var(--gold) !important;
+}
+
 

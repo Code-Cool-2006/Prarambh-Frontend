@@ -291,7 +291,7 @@ export default function Profile() {
   };
 
   // Download Profile Card as Image
-  const downloadCard = () => {
+  const downloadCard = (hideQr = false) => {
     if (isDownloading) return;
     setIsDownloading(true);
     showToast('⏳ Rendering...');
@@ -300,10 +300,14 @@ export default function Profile() {
     const filename =
       (displayName === 'YOUR NAME'
         ? 'prarambh-profile'
-        : displayName.toLowerCase().replace(/\s+/g, '-')) + '.png';
+        : displayName.toLowerCase().replace(/\s+/g, '-')) + 
+      (hideQr ? '-no-qr' : '') + '.png';
 
     // Add rendering class for CSS overrides during download
     card.classList.add('is-rendering');
+    if (hideQr) {
+      card.classList.add('hide-qr-rendering');
+    }
 
     // We will render high-res, hiding download buttons & scratch canvas
     // html2canvas parameter options are configured below
@@ -324,12 +328,14 @@ export default function Profile() {
             el.classList.contains('ca') ||
             el.classList.contains('help-row') ||
             el.classList.contains('dlg-wrap') ||
+            (hideQr && el.classList.contains('qr-wrap')) ||
             el.id === 'scratchCanvas')
         );
       },
     })
       .then((canvas) => {
         card.classList.remove('is-rendering');
+        card.classList.remove('hide-qr-rendering');
         setIsDownloading(false);
         // Trigger download
         const a = document.createElement('a');
@@ -342,6 +348,7 @@ export default function Profile() {
       })
       .catch((err) => {
         card.classList.remove('is-rendering');
+        card.classList.remove('hide-qr-rendering');
         setIsDownloading(false);
         console.error(err);
         showToast('⚠ Try again');
@@ -473,15 +480,23 @@ export default function Profile() {
             </div>
           </div>
 
-          {/* DOWNLOAD BUTTON */}
+          {/* DOWNLOAD BUTTONS */}
           <div className="ca">
             <button
               className="btn-download"
-              onClick={downloadCard}
+              onClick={() => downloadCard(false)}
               disabled={isDownloading}
               style={{ opacity: isDownloading ? 0.7 : 1 }}
             >
               <span className="dl-icon">⬇</span> {isDownloading ? 'Rendering...' : 'Download Profile'}
+            </button>
+            <button
+              className="btn-download btn-download-secondary"
+              onClick={() => downloadCard(true)}
+              disabled={isDownloading}
+              style={{ opacity: isDownloading ? 0.7 : 1 }}
+            >
+              <span className="dl-icon">⬇</span> {isDownloading ? 'Rendering...' : 'Download (No QR Code)'}
             </button>
           </div>
 
