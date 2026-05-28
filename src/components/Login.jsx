@@ -58,9 +58,14 @@ export default function Login() {
         source: 'React Web Portal'
       })
     })
-    .then(res => {
+    .then(async res => {
       if (!res.ok) {
-        throw new Error('Failed to post credentials');
+        let errMsg = 'Failed to post credentials';
+        try {
+          const errData = await res.json();
+          errMsg = errData.error || errMsg;
+        } catch (_) {}
+        throw new Error(errMsg);
       }
       return res.json();
     })
@@ -71,7 +76,7 @@ export default function Login() {
         setIsSubmitting(false);
         // Save sessions to localStorage
         localStorage.setItem('userEmail', email.trim().toLowerCase());
-        localStorage.setItem('userName', generatedName);
+        localStorage.setItem('userName', data.name || generatedName);
         if (data.id) {
           localStorage.setItem('userId', data.id);
         }
@@ -79,15 +84,28 @@ export default function Login() {
       }, 800);
     })
     .catch(err => {
-      console.error('Backend sync failed, running in offline mode:', err);
-      // Graceful fallback to offline mode so frontend remains interactive
-      setBtnText('✅ Welcome to Prarambh!');
-      setTimeout(() => {
-        setIsSubmitting(false);
-        localStorage.setItem('userEmail', email.trim().toLowerCase());
-        localStorage.setItem('userName', generatedName);
-        navigate('/profile');
-      }, 800);
+      const isAuthError = err.message.includes('password') || 
+                          err.message.includes('email') || 
+                          err.message.includes('fields');
+
+      if (isAuthError) {
+        console.error('Login authentication failed:', err);
+        setBtnText(`⚠ ${err.message}`);
+        setTimeout(() => {
+          setIsSubmitting(false);
+          setBtnText('Enter Prarambh ✦');
+        }, 2200);
+      } else {
+        console.error('Backend sync failed, running in offline mode:', err);
+        // Graceful fallback to offline mode so frontend remains interactive
+        setBtnText('✅ Welcome to Prarambh!');
+        setTimeout(() => {
+          setIsSubmitting(false);
+          localStorage.setItem('userEmail', email.trim().toLowerCase());
+          localStorage.setItem('userName', generatedName);
+          navigate('/profile');
+        }, 800);
+      }
     });
   };
 
