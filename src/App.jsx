@@ -1,11 +1,19 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate
+} from 'react-router-dom';
+
 import Login from './components/Login';
 import Profile from './components/Profile';
+import Countdown from './components/Countdown';
 
 function App() {
   return (
     <Router>
+
       {/* Dynamic Immersive Background */}
       <div className="bg-glow-container">
         <div className="glow-orb orb-1"></div>
@@ -13,14 +21,32 @@ function App() {
         <div className="glow-orb orb-3"></div>
         <div className="glow-orb orb-4"></div>
       </div>
+
+      {/* Grid Overlay */}
       <div className="bg-grid"></div>
 
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
-        {/* Default route redirects to Login page */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+
+        {/* Countdown → Login Flow */}
+        <Route
+          path="/login"
+          element={<Countdown />}
+        />
+
+        {/* Profile Page */}
+        <Route
+          path="/profile"
+          element={<Profile />}
+        />
+
+        {/* Redirect Unknown Routes */}
+        <Route
+          path="*"
+          element={<Navigate to="/login" replace />}
+        />
+
       </Routes>
+
     </Router>
   );
 }
