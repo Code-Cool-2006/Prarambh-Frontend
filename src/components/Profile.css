@@ -7,6 +7,15 @@
 
 /* ── CARD ── */
 .card{
+  --ink:#060410;--ink2:#0C0820;
+  --saffron:#FF6B1A;--gold:#F5C842;
+  --rose:#E8305A;--teal:#00D4B4;--cream:#FDF4E3;
+  --muted:rgba(253,244,227,0.45);
+  --display:'Bebas Neue',sans-serif;
+  --desi:'Yatra One',cursive;
+  --ui:'Rajdhani',sans-serif;
+  --serif:'Playfair Display',serif;
+
   position:relative;z-index:1;width:min(440px,100%);
   margin-top:28px;
   animation:rise 0.8s cubic-bezier(0.22,1,0.36,1) both;
