@@ -27,10 +27,10 @@ function App() {
 
       <Routes>
 
-        {/* Countdown → Login Flow */}
+        {/* Login Page */}
         <Route
           path="/login"
-          element={<Countdown />}
+          element={<Login />}
         />
 
         {/* Profile Page */}

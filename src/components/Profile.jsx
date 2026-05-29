@@ -417,7 +417,7 @@ export default function Profile() {
       </div>
 
       {/* PROFILE CARD */}
-      <div className="card" id="profileCard" ref={cardRef}>
+      <div className={`card ${localStorage.getItem('userRole') === 'Organizer' ? 'is-organizer' : ''}`} id="profileCard" ref={cardRef}>
         <div className="poster">
           {/* Header */}
           <div className="ch">
@@ -456,7 +456,9 @@ export default function Profile() {
 
           {/* Name & College details */}
           <div className="ns">
-            <div className="ns-pre">Participant &nbsp;·&nbsp; Prarambh 2025</div>
+            <div className="ns-pre">
+              {localStorage.getItem('userRole') === 'Organizer' ? 'Organizer' : 'Participant'} &nbsp;·&nbsp; Prarambh 2025
+            </div>
             <div className="ns-name" id="displayName" data-text={displayName}>
               {displayName}
             </div>
@@ -472,79 +474,105 @@ export default function Profile() {
             <div className="div-line"></div>
           </div>
 
+          {localStorage.getItem('userRole') === 'Organizer' && (
+            <div className="org-quote-wrap">
+              <div className="org-quote-text">
+                "Behind every great beginning is an extraordinary team."
+              </div>
+              <div className="org-quote-badge">ORGANIZER TEAM</div>
+            </div>
+          )}
+
           {/* DIALOGUE SCRATCH CARD */}
-          <div className="dlg-wrap">
-            <div className="dlg-header">
-              <div className="dlg-lbl">Dialogue</div>
-              {!scratchRevealed && (
-                <div className="scratch-hint" id="scratchHint">
-                  <span class="sh-icon">✦</span> Scratch to reveal
+          {localStorage.getItem('userRole') !== 'Organizer' && (
+            <div className="dlg-wrap">
+              <div className="dlg-header">
+                <div className="dlg-lbl">Dialogue</div>
+                {!scratchRevealed && (
+                  <div className="scratch-hint" id="scratchHint">
+                    <span className="sh-icon">✦</span> Scratch to reveal
+                  </div>
+                )}
+              </div>
+
+              <div className="scratch-outer" id="scratchOuter" ref={outerRef}>
+                {/* Text hidden beneath canvas */}
+                <div className="dlg-box">
+                  <span className="dlg-text" id="participantDialogue">
+                    {dialogueText ? dialogueText.replace(/\s*\([^)]*\)\s*$/, '') : ''}
+                  </span>
+                </div>
+                {/* Canvas Overlay */}
+                <canvas
+                  id="scratchCanvas"
+                  ref={canvasRef}
+                  className={scratchRevealed ? 'fully-revealed' : ''}
+                />
+                {/* Sparkle burst pop-up */}
+                <div className={`reveal-burst ${isPopActive ? 'pop' : ''}`} id="revealBurst">
+                  ✨
+                </div>
+              </div>
+
+              {/* Quote Attribution Details */}
+              {scratchRevealed && attributionName && (
+                <div className="dlg-attr" id="dlgAttr" style={{ display: 'flex' }}>
+                  <div className="dlg-dash"></div>
+                  <div className="dlg-attr-name" id="dialogueAttrName">
+                    {attributionName}
+                  </div>
                 </div>
               )}
             </div>
-
-            <div className="scratch-outer" id="scratchOuter" ref={outerRef}>
-              {/* Text hidden beneath canvas */}
-              <div className="dlg-box">
-                <span className="dlg-text" id="participantDialogue">
-                  {dialogueText ? dialogueText.replace(/\s*\([^)]*\)\s*$/, '') : ''}
-                </span>
-              </div>
-              {/* Canvas Overlay */}
-              <canvas
-                id="scratchCanvas"
-                ref={canvasRef}
-                className={scratchRevealed ? 'fully-revealed' : ''}
-              />
-              {/* Sparkle burst pop-up */}
-              <div className={`reveal-burst ${isPopActive ? 'pop' : ''}`} id="revealBurst">
-                ✨
-              </div>
-            </div>
-
-            {/* Quote Attribution Details */}
-            {scratchRevealed && attributionName && (
-              <div className="dlg-attr" id="dlgAttr" style={{ display: 'flex' }}>
-                <div className="dlg-dash"></div>
-                <div className="dlg-attr-name" id="dialogueAttrName">
-                  {attributionName}
-                </div>
-              </div>
-            )}
-          </div>
+          )}
 
           {/* QR CODE SLOT */}
-          <div className="qr-wrap">
-            <div className="qr-box">
-              {qrCodeUrl ? (
-                <img src={qrCodeUrl} alt="Unique Verification QR" style={{ width: '100%', height: '100%', borderRadius: '2.5px' }} />
-              ) : (
-                <div className="qr-placeholder">
-                  <span className="qr-icon">📱</span>
-                  <span className="qr-label">GENERATING...</span>
-                </div>
-              )}
+          {localStorage.getItem('userRole') !== 'Organizer' && (
+            <div className="qr-wrap">
+              <div className="qr-box">
+                {qrCodeUrl ? (
+                  <img src={qrCodeUrl} alt="Unique Verification QR" style={{ width: '100%', height: '100%', borderRadius: '2.5px' }} />
+                ) : (
+                  <div className="qr-placeholder">
+                    <span className="qr-icon">📱</span>
+                    <span className="qr-label">GENERATING...</span>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* DOWNLOAD BUTTONS */}
           <div className="ca">
-            <button
-              className="btn-download"
-              onClick={() => downloadCard(false)}
-              disabled={isDownloading}
-              style={{ opacity: isDownloading ? 0.7 : 1 }}
-            >
-              <span className="dl-icon">⬇</span> {isDownloading ? 'Rendering...' : 'Download Profile'}
-            </button>
-            <button
-              className="btn-download btn-download-secondary"
-              onClick={() => downloadCard(true)}
-              disabled={isDownloading}
-              style={{ opacity: isDownloading ? 0.7 : 1 }}
-            >
-              <span className="dl-icon">⬇</span> {isDownloading ? 'Rendering...' : 'Download (No QR Code)'}
-            </button>
+            {localStorage.getItem('userRole') === 'Organizer' ? (
+              <button
+                className="btn-download"
+                onClick={() => downloadCard(true)}
+                disabled={isDownloading}
+                style={{ opacity: isDownloading ? 0.7 : 1, width: '100%' }}
+              >
+                <span className="dl-icon">⬇</span> {isDownloading ? 'Rendering...' : 'Download Card'}
+              </button>
+            ) : (
+              <>
+                <button
+                  className="btn-download"
+                  onClick={() => downloadCard(false)}
+                  disabled={isDownloading}
+                  style={{ opacity: isDownloading ? 0.7 : 1 }}
+                >
+                  <span className="dl-icon">⬇</span> {isDownloading ? 'Rendering...' : 'Download Profile'}
+                </button>
+                <button
+                  className="btn-download btn-download-secondary"
+                  onClick={() => downloadCard(true)}
+                  disabled={isDownloading}
+                  style={{ opacity: isDownloading ? 0.7 : 1 }}
+                >
+                  <span className="dl-icon">⬇</span> {isDownloading ? 'Rendering...' : 'Download (No QR Code)'}
+                </button>
+              </>
+            )}
           </div>
 
           {/* Need Help */}

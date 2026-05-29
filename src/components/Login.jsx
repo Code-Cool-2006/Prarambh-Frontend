@@ -13,13 +13,50 @@ export default function Login() {
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [shake, setShake] = useState(false);
 
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [adminName, setAdminName] = useState('');
+
   const togglePw = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleEmailChange = (val) => {
+    setEmail(val);
+    const cleanEmail = val.trim().toLowerCase();
+    if (cleanEmail.startsWith('admin@')) {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
+    }
   };
 
   const handleLogin = (e) => {
     if (e) e.preventDefault();
     if (isSubmitting) return;
+
+    if (isAdmin) {
+      if (!adminName.trim()) {
+        setShake(false);
+        setTimeout(() => setShake(true), 10);
+        setBtnText('⚠ Enter your name');
+        setTimeout(() => {
+          setBtnText('Enter Prarambh ✦');
+        }, 1600);
+        return;
+      }
+      setIsSubmitting(true);
+      setBtnText('✦ Entering...');
+
+      setTimeout(() => {
+        setIsSubmitting(false);
+        localStorage.setItem('userEmail', email.trim().toLowerCase());
+        localStorage.setItem('userName', adminName.trim());
+        localStorage.setItem('userRole', 'Organizer');
+        localStorage.removeItem('userId');
+        navigate('/profile');
+      }, 800);
+      return;
+    }
 
     if (!email.trim() || !password.trim()) {
       setShake(false);
@@ -190,36 +227,55 @@ export default function Login() {
                   autoComplete="email"
                   spellCheck="false"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => handleEmailChange(e.target.value)}
                 />
                 <span className="input-icon">✉</span>
               </div>
             </div>
 
-            {/* Password */}
-            <div className="field">
-              <label htmlFor="password">Password</label>
-              <div className="input-wrap">
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  id="password"
-                  placeholder="••••••••"
-                  autoComplete="current-password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <span className="input-icon">🔒</span>
-                <button
-                  className="pw-toggle"
-                  type="button"
-                  id="pwToggle"
-                  onClick={togglePw}
-                  title="Show/hide password"
-                >
-                  {showPassword ? '🙈' : '👁'}
-                </button>
+            {/* Admin Name Input */}
+            {isAdmin && (
+              <div className="field">
+                <label htmlFor="adminName">Name</label>
+                <div className="input-wrap">
+                  <input
+                    type="text"
+                    id="adminName"
+                    placeholder="Enter your name"
+                    value={adminName}
+                    onChange={(e) => setAdminName(e.target.value)}
+                  />
+                  <span className="input-icon">👤</span>
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* Password */}
+            {!isAdmin && (
+              <div className="field">
+                <label htmlFor="password">Password</label>
+                <div className="input-wrap">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    placeholder="••••••••"
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <span className="input-icon">🔒</span>
+                  <button
+                    className="pw-toggle"
+                    type="button"
+                    id="pwToggle"
+                    onClick={togglePw}
+                    title="Show/hide password"
+                  >
+                    {showPassword ? '🙈' : '👁'}
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Login button */}
             <button
